@@ -20,7 +20,7 @@ module.exports = function (mock2easy) {
   }
 
   return function (req, res, next) {
-    const domain = global.options.curl.getDomain ? global.options.curl.getDomain() : global.options.curl.domain
+    const domain = global.options.curl.getDomain ? global.options.curl.getDomain(req) : global.options.curl.domain
 
     require('../server/getJsonByCurl')(mock2easy, function (error, stdout) {
       if (error) {
