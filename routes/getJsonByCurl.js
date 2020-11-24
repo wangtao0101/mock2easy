@@ -20,12 +20,14 @@ module.exports = function (mock2easy) {
   }
 
   return function (req, res, next) {
+    const domain = global.options.curl.getDomain ? global.options.curl.getDomain() : global.options.curl.domain
+
     require('../server/getJsonByCurl')(mock2easy, function (error, stdout) {
       if (error) {
         return req.json(500, err);
       }
       res.send(stdout);
-    }, global.options.curl.domain, req.originalUrl.split('?')[0], extend(true, {}, req.body, req.query, global.options.curl.parameter), global.options.curl.Cookie);
+    }, domain, req.originalUrl.split('?')[0], extend(true, {}, req.body, req.query, global.options.curl.parameter), global.options.curl.Cookie);
 
   }
 };
